@@ -45,7 +45,14 @@ const darkTheme = createTheme({
 				},
 			},
 		},
-		MuiInputAdornment: {},
+		MuiToolbar: {
+			styleOverrides: {
+				root: {
+					backgroundColor: hsl(224, 71.4, 4.1),
+					// border: `1px solid ${hsl(224, 11.4, 23.9)}`,
+				},
+			},
+		},
 	},
 });
 

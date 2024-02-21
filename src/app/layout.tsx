@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 
+import Header from "@/app/_components/header/component";
 import { darkTheme } from "@/app/_theme/main-theme";
 import { TRPCReactProvider } from "@/trpc/react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -26,7 +27,10 @@ export default function RootLayout({
 				<AppRouterCacheProvider options={{ key: "css" }}>
 					<ThemeProvider theme={darkTheme}>
 						<CssBaseline />
-						<TRPCReactProvider>{children}</TRPCReactProvider>
+						<TRPCReactProvider>
+							<Header />
+							{children}
+						</TRPCReactProvider>
 					</ThemeProvider>
 				</AppRouterCacheProvider>
 			</body>
