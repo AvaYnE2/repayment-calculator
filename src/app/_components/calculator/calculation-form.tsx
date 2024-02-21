@@ -1,6 +1,9 @@
 "use client";
-import { formSchema } from "@/app/_components/calculator/schema";
-import { oneToThirtyArray } from "@/app/_components/calculator/utils";
+import { calculationSchema } from "@/app/_components/calculator/schema";
+import {
+	oneToThirtyArray,
+	parseNumber,
+} from "@/app/_components/calculator/utils";
 import {
 	Form,
 	FormControl,
@@ -10,16 +13,28 @@ import {
 	FormMessage,
 } from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
+import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
+import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, InputAdornment, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 const CalculationForm: React.FC = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const router = useRouter();
+	const { setDetails } = useRepaymentDetails();
+	const applyCalculation = api.calculation.calculateRepayment.useMutation({
+		onSuccess: (calculatedData) => {
+			router.refresh();
+			console.log(calculatedData);
+			setDetails(calculatedData);
+		},
+	});
+	const form = useForm<z.infer<typeof calculationSchema>>({
+		resolver: zodResolver(calculationSchema),
 		defaultValues: {
 			loanAmount: "",
 			interestRate: "",
@@ -27,9 +42,12 @@ const CalculationForm: React.FC = () => {
 		},
 	});
 
-	const onSubmit = async (data: z.infer<typeof formSchema>) => {
-		console.log(data);
+	const onSubmit = async (data: z.infer<typeof calculationSchema>) => {
+		const parsedData = parseNumber(data);
+		applyCalculation.mutate(parsedData);
 	};
+
+	// TODO: Implement save state in url here
 
 	return (
 		<Box
@@ -38,13 +56,15 @@ const CalculationForm: React.FC = () => {
 			flexDirection="column"
 			alignItems="center"
 		>
-			<Typography variant="h2">Form</Typography>
+			<Typography variant="h2" sx={{ fontSize: "26px" }}>
+				Eingabe
+			</Typography>
 			<Form {...form}>
 				<Box
 					component="form"
 					display="flex"
 					flexDirection="column"
-					gap="2rem"
+					gap="3rem"
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
 					<FormField
@@ -115,14 +135,6 @@ const CalculationForm: React.FC = () => {
 							<FormItem>
 								<FormLabel>Zinsbindungsdauer</FormLabel>
 								<FormControl>
-									{/*<Input*/}
-									{/*	error={!!form.formState.errors.zinsbindungsdauer}*/}
-									{/*	endAdornment={*/}
-									{/*		<InputAdornment position="end">Jahre</InputAdornment>*/}
-									{/*	}*/}
-									{/*	{...field}*/}
-									{/*/>*/}
-
 									<FormSelect
 										value={field.value ?? ""}
 										onChange={(event: string) => field.onChange(event)}
@@ -137,7 +149,7 @@ const CalculationForm: React.FC = () => {
 					/>
 					{/*TODO: Change styling because wrong styling gets applied to the button*/}
 					<Button type="submit" color="primary">
-						Submit
+						Berechnen
 					</Button>
 				</Box>
 			</Form>

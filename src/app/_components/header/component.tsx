@@ -6,9 +6,9 @@ const Header: React.FC = () => {
 		<AppBar position="static">
 			<Toolbar>
 				<Typography
-					variant="h6"
+					variant="h1"
 					component="div"
-					sx={{ flexGrow: 1 }}
+					sx={{ flexGrow: 1, fontSize: "32px" }}
 					textAlign="center"
 				>
 					Tilgungsrechner
