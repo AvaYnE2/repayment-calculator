@@ -6,7 +6,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "lint": "biome lint ./src"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
