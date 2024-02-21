@@ -1,6 +1,9 @@
 import { Inter } from "next/font/google";
 
+import { darkTheme } from "@/app/_theme/main-theme";
 import { TRPCReactProvider } from "@/trpc/react";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -18,9 +21,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="de">
 			<body className={inter.className}>
-				<TRPCReactProvider>{children}</TRPCReactProvider>
+				<AppRouterCacheProvider options={{ key: "css" }}>
+					<ThemeProvider theme={darkTheme}>
+						<CssBaseline />
+						<TRPCReactProvider>{children}</TRPCReactProvider>
+					</ThemeProvider>
+				</AppRouterCacheProvider>
 			</body>
 		</html>
 	);
