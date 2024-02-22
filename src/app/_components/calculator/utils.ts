@@ -12,8 +12,6 @@ export function parseNumber(data: z.infer<typeof calculationSchema>) {
 		loanAmount: parseFloat(data.loanAmount),
 		interestRate: parseFloat(data.interestRate),
 		initialRepaymentRate: parseFloat(data.initialRepaymentRate),
-		fixedInterestPeriod: data.fixedInterestPeriod
-			? parseInt(data.fixedInterestPeriod)
-			: undefined,
+		fixedInterestPeriod: parseInt(data.fixedInterestPeriod),
 	};
 }

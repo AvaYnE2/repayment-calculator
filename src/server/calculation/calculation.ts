@@ -1,9 +1,6 @@
 import { calculateMonthlyRate } from "@/server/calculation/monthly-rate";
 import { calculateRepaymentPlan } from "@/server/calculation/repayment-plan";
-import {
-	type NumberCalculationSchema,
-	type RepaymentPlan,
-} from "@/shared/types/calculation";
+import { type NumberCalculationSchema } from "@/shared/types/calculation";
 
 export const calculateLoanDetails = <T extends NumberCalculationSchema>({
 	loanAmount,
@@ -20,16 +17,12 @@ export const calculateLoanDetails = <T extends NumberCalculationSchema>({
 		initialRepaymentRatePercentage,
 	});
 
-	let repaymentPlan: RepaymentPlan[] = [];
-
-	if (fixedInterestPeriod) {
-		repaymentPlan = calculateRepaymentPlan({
-			loanAmount,
-			interestRatePercentage,
-			initialRepaymentRate,
-			fixedInterestPeriod,
-		});
-	}
+	const repaymentPlan = calculateRepaymentPlan({
+		loanAmount,
+		interestRatePercentage,
+		initialRepaymentRate,
+		fixedInterestPeriod,
+	});
 
 	return {
 		monthlyRate,

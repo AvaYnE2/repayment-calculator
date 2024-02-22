@@ -36,9 +36,10 @@ const CalculationForm: React.FC = () => {
 	const form = useForm<z.infer<typeof calculationSchema>>({
 		resolver: zodResolver(calculationSchema),
 		defaultValues: {
-			loanAmount: "",
-			interestRate: "",
-			initialRepaymentRate: "",
+			loanAmount: "250000",
+			interestRate: "2",
+			initialRepaymentRate: "2",
+			fixedInterestPeriod: "10",
 		},
 	});
 
@@ -102,6 +103,9 @@ const CalculationForm: React.FC = () => {
 										endAdornment={
 											<InputAdornment position="end">%</InputAdornment>
 										}
+										inputProps={{
+											pattern: "[0-9]+",
+										}}
 										{...field}
 									/>
 								</FormControl>
@@ -109,6 +113,7 @@ const CalculationForm: React.FC = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name="initialRepaymentRate"

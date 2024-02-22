@@ -24,8 +24,7 @@ export const calculationSchema = z.object({
 		.min(1, "Zinsbindungsdauer ist erforderlich")
 		.regex(/^\d+(\.\d{1,2})?$/, {
 			message: "Zinsbindungsdauer muss eine Zahl sein",
-		})
-		.optional(),
+		}),
 });
 
 export const numberCalculationSchema = z.object({
@@ -47,9 +46,7 @@ export const numberCalculationSchema = z.object({
 			invalid_type_error: "Anfängliche Tilgung muss eine Zahl sein",
 		})
 		.min(1, "Anfängliche Tilgung muss größer als 0 sein"),
-	fixedInterestPeriod: z
-		.number({
-			invalid_type_error: "Zinsbindungsdauer muss eine Zahl sein",
-		})
-		.optional(),
+	fixedInterestPeriod: z.number({
+		invalid_type_error: "Zinsbindungsdauer muss eine Zahl sein",
+	}),
 });

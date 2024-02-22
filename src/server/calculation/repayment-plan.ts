@@ -1,4 +1,5 @@
 import { type RepaymentPlan } from "@/shared/types/calculation";
+import { formatNumber } from "@/shared/utils/format-number";
 import { DateTime } from "luxon";
 
 export const calculateRepaymentPlan = <
@@ -26,10 +27,10 @@ export const calculateRepaymentPlan = <
 
 		plan.push({
 			year: yearDate,
-			rate: rate.toFixed(2),
-			interestPortion: interestAmount.toFixed(2),
-			repaymentPortion: repaymentAmount.toFixed(2),
-			remainingDebt: debt.toFixed(2),
+			rate: formatNumber(rate),
+			interestPortion: formatNumber(interestAmount),
+			repaymentPortion: formatNumber(repaymentAmount),
+			remainingDebt: formatNumber(debt),
 		});
 	}
 

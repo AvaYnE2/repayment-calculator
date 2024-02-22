@@ -1,3 +1,5 @@
+import { formatNumber } from "@/shared/utils/format-number";
+
 interface MonthlyRateProps {
 	loanAmount: number;
 	interestRatePercentage: number;
@@ -14,5 +16,5 @@ export const calculateMonthlyRate = <T extends MonthlyRateProps>({
 
 	const monthlyRate = yearlyAnnuity / 12;
 
-	return monthlyRate.toFixed(2);
+	return formatNumber(monthlyRate);
 };
