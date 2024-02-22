@@ -8,7 +8,7 @@ interface repaymentPlanState {
 
 export const useRepaymentDetails = create<repaymentPlanState>((set) => ({
 	details: {
-		monthlyRate: 0,
+		monthlyRate: "",
 		repaymentPlan: [],
 	},
 	setDetails: (data) => set({ details: data }),

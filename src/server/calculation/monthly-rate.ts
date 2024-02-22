@@ -14,5 +14,5 @@ export const calculateMonthlyRate = <T extends MonthlyRateProps>({
 
 	const monthlyRate = yearlyAnnuity / 12;
 
-	return monthlyRate;
+	return monthlyRate.toFixed(2);
 };
