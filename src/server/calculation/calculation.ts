@@ -1,6 +1,10 @@
-import { calculateMonthlyRate } from "@/server/calculation/monthly-rate";
+import {
+	calculateMonthlyRate,
+	calculateRemainingDebt,
+} from "@/server/calculation/details";
 import { calculateRepaymentPlan } from "@/server/calculation/repayment-plan";
 import { type NumberCalculationSchema } from "@/shared/types/calculation";
+import { formatNumber } from "@/shared/utils/format-number";
 
 export const calculateLoanDetails = <T extends NumberCalculationSchema>({
 	loanAmount,
@@ -8,24 +12,32 @@ export const calculateLoanDetails = <T extends NumberCalculationSchema>({
 	initialRepaymentRate,
 	fixedInterestPeriod,
 }: T) => {
-	const interestRatePercentage = interestRate / 100; // i
-	const initialRepaymentRatePercentage = initialRepaymentRate / 100; // t
+	const interestRateDezimal = interestRate / 100;
+	const initialRepaymentRateDezimal = initialRepaymentRate / 100;
 
-	const monthlyRate = calculateMonthlyRate({
+	const monthlyRate = calculateMonthlyRate(
 		loanAmount,
-		interestRatePercentage,
-		initialRepaymentRatePercentage,
-	});
+		interestRateDezimal,
+		initialRepaymentRateDezimal,
+	);
 
 	const repaymentPlan = calculateRepaymentPlan({
 		loanAmount,
-		interestRatePercentage,
-		initialRepaymentRate,
+		interestRateDezimal,
 		fixedInterestPeriod,
+		monthlyRate,
 	});
 
-	return {
+	const remainingDebt = calculateRemainingDebt(
+		loanAmount,
+		interestRate,
+		fixedInterestPeriod,
 		monthlyRate,
+	);
+
+	return {
+		monthlyRate: formatNumber(monthlyRate),
+		remainingDebt: formatNumber(remainingDebt),
 		repaymentPlan,
 	};
 };

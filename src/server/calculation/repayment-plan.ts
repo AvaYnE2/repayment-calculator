@@ -5,31 +5,40 @@ import { DateTime } from "luxon";
 export const calculateRepaymentPlan = <
 	T extends {
 		loanAmount: number;
-		interestRatePercentage: number;
+		interestRateDezimal: number;
 		fixedInterestPeriod: number;
+		monthlyRate: number;
 	},
 >({
 	loanAmount,
-	interestRatePercentage,
+	interestRateDezimal,
 	fixedInterestPeriod,
+	monthlyRate,
 }: T) => {
 	let debt = loanAmount;
+	const monthlyInterestRate = interestRateDezimal / 12;
 	const plan: RepaymentPlan[] = [];
+
 	const now = DateTime.now();
 
-	for (let year = 0; year < fixedInterestPeriod; year++) {
-		const interestAmount = debt * interestRatePercentage;
-		const repaymentAmount = debt / fixedInterestPeriod;
-		const rate = interestAmount + repaymentAmount;
-		debt -= repaymentAmount;
+	for (let year = 1; year <= fixedInterestPeriod; year++) {
+		let interestAmountYear = 0;
+		let repaymentAmountYear = 0;
+		for (let month = 0; month < 12; month++) {
+			const interestPerMonth = debt * monthlyInterestRate;
+			const principalRepayment = monthlyRate - interestPerMonth;
+			debt -= principalRepayment;
+			interestAmountYear += interestPerMonth;
+			repaymentAmountYear += principalRepayment;
+		}
 
-		const yearDate = now.plus({ year }).toFormat("yyyy");
+		console.log({ year, interestAmountYear, repaymentAmountYear, debt });
 
 		plan.push({
-			year: yearDate,
-			rate: formatNumber(rate),
-			interestPortion: formatNumber(interestAmount),
-			repaymentPortion: formatNumber(repaymentAmount),
+			year: now.plus({ year }).toFormat("yyyy"),
+			rate: formatNumber(monthlyRate),
+			interestPortion: formatNumber(interestAmountYear),
+			repaymentPortion: formatNumber(repaymentAmountYear),
 			remainingDebt: formatNumber(debt),
 		});
 	}
