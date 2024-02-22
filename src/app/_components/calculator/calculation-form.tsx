@@ -29,7 +29,6 @@ const CalculationForm: React.FC = () => {
 	const applyCalculation = api.calculation.calculateRepayment.useMutation({
 		onSuccess: (calculatedData) => {
 			router.refresh();
-			console.log(calculatedData);
 			setDetails(calculatedData);
 		},
 	});

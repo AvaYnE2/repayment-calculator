@@ -32,8 +32,6 @@ export const calculateRepaymentPlan = <
 			repaymentAmountYear += principalRepayment;
 		}
 
-		console.log({ year, interestAmountYear, repaymentAmountYear, debt });
-
 		plan.push({
 			year: now.plus({ year }).toFormat("yyyy"),
 			rate: formatNumber(monthlyRate),
