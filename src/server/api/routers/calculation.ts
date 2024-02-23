@@ -6,7 +6,9 @@ export const calculationRouter = createTRPCRouter({
 	calculateRepayment: publicProcedure
 		.input(numberCalculationSchema)
 		.mutation(({ input }) => {
+			console.time("calculation");
 			const calcuatedData = calculateLoanDetails(input);
+			console.timeEnd("calculation");
 			return calcuatedData;
 		}),
 });

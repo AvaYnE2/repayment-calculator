@@ -4,9 +4,9 @@ import {
 } from "@/server/calculation/details";
 import { calculateRepaymentPlan } from "@/server/calculation/repayment-plan";
 import { type NumberCalculationSchema } from "@/shared/types/calculation";
-import { formatNumber } from "@/shared/utils/format-number";
+import { formatNumber } from "@/shared/utils/numbers";
 
-export const calculateLoanDetails = <T extends NumberCalculationSchema>({
+export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 	loanAmount,
 	interestRate,
 	initialRepaymentRate,
@@ -21,12 +21,11 @@ export const calculateLoanDetails = <T extends NumberCalculationSchema>({
 		initialRepaymentRateDezimal,
 	);
 
-	const repaymentPlan = calculateRepaymentPlan({
+	const repaymentPlan = calculateRepaymentPlan(
 		loanAmount,
 		interestRateDezimal,
-		fixedInterestPeriod,
 		monthlyRate,
-	});
+	);
 
 	const remainingDebt = calculateRemainingDebt(
 		loanAmount,
