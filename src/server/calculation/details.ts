@@ -1,3 +1,5 @@
+import { round } from "@/shared/utils/numbers";
+
 export const calculateMonthlyRate = (
 	loanAmount: number,
 	interestRateDezimal: number,
@@ -24,7 +26,7 @@ export const calculateRemainingDebt = (
 
 	for (let month = 0; month < fixedInterestPeriodInMonths; month++) {
 		const interestAmount = debt * monthlyRateDezimal;
-		const repaymentAmount = Number(monthlyRate.toFixed(2)) - interestAmount;
+		const repaymentAmount = round(monthlyRate) - interestAmount;
 		debt -= repaymentAmount;
 	}
 

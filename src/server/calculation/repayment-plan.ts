@@ -1,45 +1,58 @@
 import { type RepaymentPlan } from "@/shared/types/calculation";
-import { formatNumber } from "@/shared/utils/format-number";
+import { formatNumber, round } from "@/shared/utils/numbers";
 import { DateTime } from "luxon";
 
-export const calculateRepaymentPlan = <
-	T extends {
-		loanAmount: number;
-		interestRateDezimal: number;
-		fixedInterestPeriod: number;
-		monthlyRate: number;
-	},
->({
-	loanAmount,
-	interestRateDezimal,
-	fixedInterestPeriod,
-	monthlyRate,
-}: T) => {
-	let debt = loanAmount;
+export const calculateRepaymentPlan = (
+	loanAmount: number,
+	interestRateDezimal: number,
+	monthlyRate: number,
+) => {
 	const monthlyInterestRate = interestRateDezimal / 12;
+	// start with the following month
+	let month = DateTime.now().month + 1;
+	let year = DateTime.now().year;
+	let currentAmount = loanAmount;
+	let annualPrincipalPayment = 0;
+	let annualInterestPayment = 0;
+	let annualRate = 0;
 	const plan: RepaymentPlan[] = [];
 
-	const now = DateTime.now();
+	while (currentAmount > 0) {
+		const monthlyInterestPayment = currentAmount * monthlyInterestRate;
 
-	for (let year = 1; year <= fixedInterestPeriod; year++) {
-		let interestAmountYear = 0;
-		let repaymentAmountYear = 0;
-		for (let month = 0; month < 12; month++) {
-			const interestPerMonth = debt * monthlyInterestRate;
-			const principalRepayment = monthlyRate - interestPerMonth;
-			debt -= principalRepayment;
-			interestAmountYear += interestPerMonth;
-			repaymentAmountYear += principalRepayment;
+		const actualMonthlyPayment = Math.min(
+			monthlyRate,
+			currentAmount + monthlyInterestPayment,
+		);
+
+		const monthlyPrincipalPayment =
+			actualMonthlyPayment - monthlyInterestPayment;
+
+		// Update annual values
+		annualPrincipalPayment += round(monthlyPrincipalPayment);
+		annualInterestPayment += round(monthlyInterestPayment);
+		annualRate += round(actualMonthlyPayment);
+
+		// Update remaining debt
+		currentAmount -= monthlyPrincipalPayment;
+
+		// year is over or debt is paid off
+		if (month === 12 || currentAmount <= 0) {
+			plan.push({
+				year: `${year}`,
+				rate: formatNumber(annualRate),
+				interestPortion: formatNumber(annualInterestPayment),
+				repaymentPortion: formatNumber(annualPrincipalPayment),
+				remainingDebt: formatNumber(currentAmount),
+			});
+			// Reset annual values
+			annualPrincipalPayment = 0;
+			annualInterestPayment = 0;
+			annualRate = 0;
+			year++;
+			month = 0;
 		}
-
-		plan.push({
-			year: now.plus({ year }).toFormat("yyyy"),
-			rate: formatNumber(monthlyRate),
-			interestPortion: formatNumber(interestAmountYear),
-			repaymentPortion: formatNumber(repaymentAmountYear),
-			remainingDebt: formatNumber(debt),
-		});
+		month++;
 	}
-
 	return plan;
 };

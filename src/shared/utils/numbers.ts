@@ -6,3 +6,7 @@ export const formatNumber = (number: number) => {
 
 	return formatter.format(number);
 };
+
+export function round(value: number) {
+	return Math.round(value * 100) / 100;
+}
