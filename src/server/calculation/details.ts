@@ -25,6 +25,10 @@ export const calculateRemainingDebt = (
 	const fixedInterestPeriodInMonths = fixedInterestPeriod * 12;
 
 	for (let month = 0; month < fixedInterestPeriodInMonths; month++) {
+		if (debt <= 0) {
+			debt = 0;
+			break;
+		}
 		const interestAmount = debt * monthlyRateDezimal;
 		const repaymentAmount = round(monthlyRate) - interestAmount;
 		debt -= repaymentAmount;
