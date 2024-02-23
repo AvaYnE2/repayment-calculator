@@ -14,6 +14,10 @@ import {
 } from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
 import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
+import {
+	formatCurrency,
+	formatPercentage,
+} from "@/app/_components/shared/utils/format-number-input";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, InputAdornment, Typography } from "@mui/material";
@@ -35,7 +39,7 @@ const CalculationForm: React.FC = () => {
 	const form = useForm<z.infer<typeof calculationSchema>>({
 		resolver: zodResolver(calculationSchema),
 		defaultValues: {
-			loanAmount: "250000",
+			loanAmount: formatCurrency("250000"),
 			interestRate: "2",
 			initialRepaymentRate: "2",
 			fixedInterestPeriod: "10",
@@ -81,7 +85,15 @@ const CalculationForm: React.FC = () => {
 												endAdornment={
 													<InputAdornment position="end">€</InputAdornment>
 												}
+												autoComplete="off"
 												{...field}
+												onChange={(e) => {
+													const { value } = e.target;
+
+													// TODO: Cursor position is not correct when typing before the comma
+													const formattedValue = formatCurrency(value);
+													field.onChange(formattedValue);
+												}}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -102,10 +114,14 @@ const CalculationForm: React.FC = () => {
 										endAdornment={
 											<InputAdornment position="end">%</InputAdornment>
 										}
-										inputProps={{
-											pattern: "[0-9]+",
-										}}
+										autoComplete="off"
 										{...field}
+										onChange={(e) => {
+											const { value } = e.target;
+
+											const formattedValue = formatPercentage(value);
+											field.onChange(formattedValue);
+										}}
 									/>
 								</FormControl>
 								<FormMessage />
@@ -122,10 +138,17 @@ const CalculationForm: React.FC = () => {
 								<FormControl>
 									<Input
 										error={!!form.formState.errors.initialRepaymentRate}
+										autoComplete="off"
 										endAdornment={
 											<InputAdornment position="end">%</InputAdornment>
 										}
 										{...field}
+										onChange={(e) => {
+											const { value } = e.target;
+
+											const formattedValue = formatPercentage(value);
+											field.onChange(formattedValue);
+										}}
 									/>
 								</FormControl>
 								<FormMessage />

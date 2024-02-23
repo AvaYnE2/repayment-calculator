@@ -1,5 +1,5 @@
 import { type RepaymentPlan } from "@/shared/types/calculation";
-import { formatNumber, round } from "@/shared/utils/numbers";
+import { formatNumberToGermanString, round } from "@/shared/utils/numbers";
 import { DateTime } from "luxon";
 
 export const calculateRepaymentPlan = (
@@ -40,10 +40,10 @@ export const calculateRepaymentPlan = (
 		if (month === 12 || currentAmount <= 0) {
 			plan.push({
 				year: `${year}`,
-				rate: formatNumber(annualRate),
-				interestPortion: formatNumber(annualInterestPayment),
-				repaymentPortion: formatNumber(annualPrincipalPayment),
-				remainingDebt: formatNumber(currentAmount),
+				rate: formatNumberToGermanString(annualRate),
+				interestPortion: formatNumberToGermanString(annualInterestPayment),
+				repaymentPortion: formatNumberToGermanString(annualPrincipalPayment),
+				remainingDebt: formatNumberToGermanString(currentAmount),
 			});
 			// Reset annual values
 			annualPrincipalPayment = 0;
