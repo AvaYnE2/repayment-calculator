@@ -1,27 +1,18 @@
 "use client";
-import { calculationSchema } from "@/app/_components/calculator/schema";
-import {
-	oneToThirtyArray,
-	parseNumber,
-} from "@/app/_components/calculator/utils";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/app/_components/shared/form";
+import {calculationSchema} from "@/app/_components/calculator/schema";
+import {oneToThirtyArray, parseNumber,} from "@/app/_components/calculator/utils";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
-import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
-import { api } from "@/trpc/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, InputAdornment, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { useRouter } from "next/navigation";
+import {useRepaymentDetails} from "@/app/_components/shared/stores/repayment-plan-store";
+import {formatCurrency} from "@/app/_components/shared/utils/format-number-input";
+import {api} from "@/trpc/react";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Button, Input, InputAdornment, Typography} from "@mui/material";
+import {Box} from "@mui/system";
+import {useRouter} from "next/navigation";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { type z } from "zod";
+import {useForm} from "react-hook-form";
+import {type z} from "zod";
 
 const CalculationForm: React.FC = () => {
 	const router = useRouter();
@@ -35,7 +26,7 @@ const CalculationForm: React.FC = () => {
 	const form = useForm<z.infer<typeof calculationSchema>>({
 		resolver: zodResolver(calculationSchema),
 		defaultValues: {
-			loanAmount: "250000",
+			loanAmount: formatCurrency("250000"),
 			interestRate: "2",
 			initialRepaymentRate: "2",
 			fixedInterestPeriod: "10",
@@ -81,7 +72,16 @@ const CalculationForm: React.FC = () => {
 												endAdornment={
 													<InputAdornment position="end">€</InputAdornment>
 												}
+												autoComplete="off"
 												{...field}
+												onChange={(e) => {
+													const { value } = e.target;
+
+													// TODO: Cursor position is not correct when typing before the comma
+													const formattedValue = formatCurrency(value);
+
+													field.onChange(formattedValue);
+												}}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -102,6 +102,7 @@ const CalculationForm: React.FC = () => {
 										endAdornment={
 											<InputAdornment position="end">%</InputAdornment>
 										}
+										autoComplete="off"
 										inputProps={{
 											pattern: "[0-9]+",
 										}}
@@ -122,6 +123,7 @@ const CalculationForm: React.FC = () => {
 								<FormControl>
 									<Input
 										error={!!form.formState.errors.initialRepaymentRate}
+										autoComplete="off"
 										endAdornment={
 											<InputAdornment position="end">%</InputAdornment>
 										}

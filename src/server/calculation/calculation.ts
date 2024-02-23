@@ -4,7 +4,7 @@ import {
 } from "@/server/calculation/details";
 import { calculateRepaymentPlan } from "@/server/calculation/repayment-plan";
 import { type NumberCalculationSchema } from "@/shared/types/calculation";
-import { formatNumber } from "@/shared/utils/numbers";
+import { formatNumberToGermanString } from "@/shared/utils/numbers";
 
 export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 	loanAmount,
@@ -35,8 +35,8 @@ export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 	);
 
 	return {
-		monthlyRate: formatNumber(monthlyRate),
-		remainingDebt: formatNumber(remainingDebt),
+		monthlyRate: formatNumberToGermanString(monthlyRate),
+		remainingDebt: formatNumberToGermanString(remainingDebt),
 		repaymentPlan,
 	};
 };

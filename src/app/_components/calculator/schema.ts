@@ -4,7 +4,7 @@ export const calculationSchema = z.object({
 	loanAmount: z
 		.string()
 		.min(1, "darlehensbetrag ist erforderlich")
-		.regex(/^\d+(\.\d{1,2})?$/, {
+		.regex(/^\d|\.+(,\d{1,2})?$/, {
 			message: "darlehensbetrag muss eine Zahl sein",
 		}),
 	interestRate: z
