@@ -1,4 +1,4 @@
-export function formatCurrency(value: string): string {
+function baseFormat(value: string) {
 	// Replace a dot at the end of the input with a comma
 	const cleanInput = value.replace(/\.$/, ",");
 
@@ -24,7 +24,18 @@ export function formatCurrency(value: string): string {
 	// Limit to two decimal places after the comma
 	const twoDecimalPlaces = singleComma.replace(/,(\d\d)\d+/g, ",$1");
 
-	// Insert a dot every three digits, except immediately after a comma
-	const formattedValue = twoDecimalPlaces.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	return twoDecimalPlaces;
+}
+
+export function formatCurrency(value: string): string {
+	const baseFormatResult = baseFormat(value);
+
+	// Add a dot as a thousand separator
+	const formattedValue = baseFormatResult.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	return formattedValue;
+}
+
+export function formatPercentage(value: string): string {
+	const baseFormatRusult = baseFormat(value);
+	return baseFormatRusult;
 }

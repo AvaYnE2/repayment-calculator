@@ -1,18 +1,31 @@
 "use client";
-import {calculationSchema} from "@/app/_components/calculator/schema";
-import {oneToThirtyArray, parseNumber,} from "@/app/_components/calculator/utils";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/app/_components/shared/form";
+import { calculationSchema } from "@/app/_components/calculator/schema";
+import {
+	oneToThirtyArray,
+	parseNumber,
+} from "@/app/_components/calculator/utils";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
-import {useRepaymentDetails} from "@/app/_components/shared/stores/repayment-plan-store";
-import {formatCurrency} from "@/app/_components/shared/utils/format-number-input";
-import {api} from "@/trpc/react";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Input, InputAdornment, Typography} from "@mui/material";
-import {Box} from "@mui/system";
-import {useRouter} from "next/navigation";
+import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
+import {
+	formatCurrency,
+	formatPercentage,
+} from "@/app/_components/shared/utils/format-number-input";
+import { api } from "@/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, InputAdornment, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { useRouter } from "next/navigation";
 import React from "react";
-import {useForm} from "react-hook-form";
-import {type z} from "zod";
+import { useForm } from "react-hook-form";
+import { type z } from "zod";
 
 const CalculationForm: React.FC = () => {
 	const router = useRouter();
@@ -79,7 +92,6 @@ const CalculationForm: React.FC = () => {
 
 													// TODO: Cursor position is not correct when typing before the comma
 													const formattedValue = formatCurrency(value);
-
 													field.onChange(formattedValue);
 												}}
 											/>
@@ -103,10 +115,13 @@ const CalculationForm: React.FC = () => {
 											<InputAdornment position="end">%</InputAdornment>
 										}
 										autoComplete="off"
-										inputProps={{
-											pattern: "[0-9]+",
-										}}
 										{...field}
+										onChange={(e) => {
+											const { value } = e.target;
+
+											const formattedValue = formatPercentage(value);
+											field.onChange(formattedValue);
+										}}
 									/>
 								</FormControl>
 								<FormMessage />
@@ -128,6 +143,12 @@ const CalculationForm: React.FC = () => {
 											<InputAdornment position="end">%</InputAdornment>
 										}
 										{...field}
+										onChange={(e) => {
+											const { value } = e.target;
+
+											const formattedValue = formatPercentage(value);
+											field.onChange(formattedValue);
+										}}
 									/>
 								</FormControl>
 								<FormMessage />

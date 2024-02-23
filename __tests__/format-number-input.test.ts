@@ -1,5 +1,5 @@
-import {formatCurrency} from "@/app/_components/shared/utils/format-number-input";
-import {describe, expect, test} from "vitest";
+import { formatCurrency } from "@/app/_components/shared/utils/format-number-input";
+import { describe, expect, test } from "vitest";
 
 describe("Input Formatting Test", () => {
 	test("test right formatting while typing more digits", () => {
