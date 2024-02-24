@@ -1,28 +1,44 @@
-# Create T3 App
+# Loan Repayment Calculator 
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This project provides a loan repayment calculator, enabling users to understand the progression of their loan by
+calculating various parameters such as loan amount, interest rate, initial repayment percentage, and optionally
+the fixed interest period.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Loan Parameter Input**: Users can enter the loan amount, interest rate, and initial repayment.
+- **Optional Fixed Interest Period**: Users can select a fixed interest period between 1 and 30 years.
+- **Calculation Results**: Clicking the "Berechnen" button displays the monthly payment and optionally the remaining debt at the end of the fixed interest period.
+- **Repayment Plan**: A repayment plan showing an annual breakdown of year, rate, interest portion, repayment portion, and remaining debt is displayed.
+- **Automatic Updates**: The calculation is automatically updated when input parameters change. 
+  
+## Technologies
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Frontend**: [ReactJS](https://react.dev) with [Material-UI](https://mui.com/) for the user interface. [Zustand](https://zustand-demo.pmnd.rs/) is used for state management.
+- **Backend**: [NextJS](https://nextjs.org/) app router.
+- **tRPC**: [tRPC](https://trpc.io/)  is used to fetch the repayment plan from the backend.
+- **create-t3-app**: The project was created using [Create T3GG](https://create.t3.gg/), a CLI for generating full-stack TypeScript applications.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
 
-## Learn More
+## Getting Started
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+#### 1. Clone the Repository:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```
+git clone https://github.com/AvaYnE2/repayment-calculator
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+#### 2. Install Dependencies:
 
-## How do I deploy this?
+```
+cd repayment-calculator
+npm install
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+#### 3. Run the Application:
+
+```
+npm run dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
