@@ -51,7 +51,7 @@ export const calculationSchema = z.object({
 				return formattedNumber >= 0 && formattedNumber <= 30;
 			},
 			{
-				message: "Zinsbindungsdauer muss eine Zahl zwischen 0 und 100 sein",
+				message: "Zinsbindungsdauer muss eine Zahl zwischen 0 und 30 sein",
 				params: {},
 			},
 		),

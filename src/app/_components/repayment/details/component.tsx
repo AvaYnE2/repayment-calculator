@@ -11,9 +11,11 @@ const RepaymentDetails: React.FC = () => {
 				Details
 			</Typography>
 			<Typography>Monatliche Rate: {details.monthlyRate} €</Typography>
-			<Typography>
-				Restschuld am Ende der Sollzinsbindung : {details.remainingDebt} €
-			</Typography>
+			{details.remainingDebt && (
+				<Typography>
+					Restschuld am Ende der Sollzinsbindung : {details.remainingDebt} €
+				</Typography>
+			)}
 		</>
 	);
 };

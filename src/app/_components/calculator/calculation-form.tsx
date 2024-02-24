@@ -1,19 +1,35 @@
 "use client";
-import {calculationSchema} from "@/app/_components/calculator/schema";
-import {type ParamFormatterFunctions} from "@/app/_components/calculator/types";
-import {oneToThirtyArray, parseNumber,} from "@/app/_components/calculator/utils";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/app/_components/shared/form";
+import { calculationSchema } from "@/app/_components/calculator/schema";
+import { type ParamFormatterFunctions } from "@/app/_components/calculator/types";
+import {
+	oneToThirtyArray,
+	parseNumber,
+} from "@/app/_components/calculator/utils";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
-import {useRepaymentDetails} from "@/app/_components/shared/stores/repayment-plan-store";
-import {formatCurrency, formatPercentage,} from "@/app/_components/shared/utils/format-number-input";
-import {type CalculationFormKeys, type CalculationSchema,} from "@/shared/types/calculation";
-import {api} from "@/trpc/react";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Input, InputAdornment, Typography} from "@mui/material";
-import {Box} from "@mui/system";
-import {useRouter, useSearchParams} from "next/navigation";
-import React, {useCallback, useEffect, useState} from "react";
-import {useForm, useWatch} from "react-hook-form";
+import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
+import {
+	formatCurrency,
+	formatPercentage,
+} from "@/app/_components/shared/utils/format-number-input";
+import {
+	type CalculationFormKeys,
+	type CalculationSchema,
+} from "@/shared/types/calculation";
+import { api } from "@/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, InputAdornment, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 
 const CalculationForm: React.FC = () => {
 	const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -32,7 +48,7 @@ const CalculationForm: React.FC = () => {
 			loanAmount: formatCurrency("250000"),
 			interestRate: formatPercentage("2"),
 			initialRepaymentRate: formatPercentage("2"),
-			fixedInterestPeriod: "1",
+			fixedInterestPeriod: "0",
 		},
 	});
 

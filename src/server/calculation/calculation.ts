@@ -27,6 +27,13 @@ export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 		monthlyRate,
 	);
 
+	if (fixedInterestPeriod === 0) {
+		return {
+			monthlyRate: formatNumberToGermanString(monthlyRate),
+			remainingDebt: null,
+			repaymentPlan,
+		};
+	}
 	const remainingDebt = calculateRemainingDebt(
 		loanAmount,
 		interestRate,
