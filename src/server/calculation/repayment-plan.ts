@@ -18,7 +18,7 @@ export const calculateRepaymentPlan = (
 	const plan: RepaymentPlan[] = [];
 
 	while (currentAmount > 0) {
-		const monthlyInterestPayment = currentAmount * monthlyInterestRate;
+		const monthlyInterestPayment = round(currentAmount * monthlyInterestRate);
 
 		const actualMonthlyPayment = Math.min(
 			monthlyRate,
