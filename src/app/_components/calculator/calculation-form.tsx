@@ -222,6 +222,7 @@ const CalculationForm: React.FC = () => {
 										label="Zinsbindungsdauer"
 										selectOptions={oneToThirtyArray}
 										unit="Jahre"
+										resetValue={field.onChange}
 									/>
 								</FormControl>
 								<FormMessage />
