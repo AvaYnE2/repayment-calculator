@@ -13,15 +13,71 @@ const PlanTableBody: React.FC = () => {
 			{details.repaymentPlan.map((row) => (
 				<TableRow
 					key={row.year}
-					sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+					sx={{
+						"&:last-child td, &:last-child th": { border: 0 },
+					}}
 				>
-					<TableCell component="th" scope="row">
+					<TableCell
+						sx={{
+							fontSize: {
+								xs: "10px",
+								md: "14px",
+							},
+							whiteSpace: "nowrap",
+						}}
+						component="th"
+						scope="row"
+					>
 						{row.year}
 					</TableCell>
-					<TableCell align="right">{row.rate} €</TableCell>
-					<TableCell align="right">{row.interestPortion} €</TableCell>
-					<TableCell align="right">{row.repaymentPortion} €</TableCell>
-					<TableCell align="right">{row.remainingDebt} €</TableCell>
+					<TableCell
+						sx={{
+							fontSize: {
+								xs: "10px",
+								md: "14px",
+							},
+							whiteSpace: "nowrap",
+						}}
+						align="right"
+					>
+						{row.rate} €
+					</TableCell>
+					<TableCell
+						sx={{
+							fontSize: {
+								xs: "10px",
+								md: "14px",
+							},
+							whiteSpace: "nowrap",
+						}}
+						align="right"
+					>
+						{row.interestPortion} €
+					</TableCell>
+					<TableCell
+						sx={{
+							fontSize: {
+								xs: "10px",
+								md: "14px",
+							},
+							whiteSpace: "nowrap",
+						}}
+						align="right"
+					>
+						{row.repaymentPortion} €
+					</TableCell>
+					<TableCell
+						sx={{
+							fontSize: {
+								xs: "10px",
+								md: "14px",
+							},
+							whiteSpace: "nowrap",
+						}}
+						align="right"
+					>
+						{row.remainingDebt} €
+					</TableCell>
 				</TableRow>
 			))}
 		</TableBody>
