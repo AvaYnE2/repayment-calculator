@@ -8,8 +8,7 @@ const Header: React.FC = () => {
 				<Typography
 					variant="h1"
 					component="div"
-					sx={{ flexGrow: 1, fontSize: "32px" }}
-					textAlign="center"
+					sx={{ flexGrow: 1, fontSize: "32px", textAlign: "center" }}
 				>
 					Tilgungsrechner
 				</Typography>
