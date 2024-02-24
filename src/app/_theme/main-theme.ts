@@ -40,8 +40,10 @@ const darkTheme = createTheme({
 				root: {
 					"&:hover": {
 						backgroundColor: hsla(210, 20, 98, 0.9),
-						textColor: hsl(220.9, 39.3, 11),
+						color: hsl(220.9, 39.3, 11),
 					},
+					backgroundColor: hsl(210, 20, 98),
+					color: hsl(220.9, 39.3, 11),
 				},
 			},
 		},

@@ -1,8 +1,13 @@
-import { type numberCalculationSchema } from "@/app/_components/calculator/schema";
+import {
+	type calculationSchema,
+	type numberCalculationSchema,
+} from "@/app/_components/calculator/schema";
 import { type RouterOutputs } from "@/trpc/shared";
 import { type z } from "zod";
 
 export type NumberCalculationSchema = z.infer<typeof numberCalculationSchema>;
+export type CalculationSchema = z.infer<typeof calculationSchema>;
+export type CalculationFormKeys = keyof CalculationSchema;
 
 export interface RepaymentPlan {
 	year: string;

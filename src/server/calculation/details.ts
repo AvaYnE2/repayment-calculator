@@ -16,15 +16,15 @@ export const calculateMonthlyRate = (
 export const calculateRemainingDebt = (
 	loanAmount: number,
 	interestRate: number,
-	fixedInterestPeriod: number,
+	interestPeriod: number,
 	monthlyRate: number,
 ) => {
 	let debt = loanAmount;
 	const monthlyRateDezimal = interestRate / 100 / 12;
 
-	const fixedInterestPeriodInMonths = fixedInterestPeriod * 12;
+	const interestPeriodInMonths = interestPeriod * 12;
 
-	for (let month = 0; month < fixedInterestPeriodInMonths; month++) {
+	for (let month = 0; month < interestPeriodInMonths; month++) {
 		if (debt <= 0) {
 			debt = 0;
 			break;

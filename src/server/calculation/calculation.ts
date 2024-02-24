@@ -10,7 +10,7 @@ export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 	loanAmount,
 	interestRate,
 	initialRepaymentRate,
-	fixedInterestPeriod,
+	interestPeriod,
 }: T) => {
 	const interestRateDezimal = interestRate / 100;
 	const initialRepaymentRateDezimal = initialRepaymentRate / 100;
@@ -27,10 +27,17 @@ export const calculateLoanDetails = async <T extends NumberCalculationSchema>({
 		monthlyRate,
 	);
 
+	if (interestPeriod === 0) {
+		return {
+			monthlyRate: formatNumberToGermanString(monthlyRate),
+			remainingDebt: null,
+			repaymentPlan,
+		};
+	}
 	const remainingDebt = calculateRemainingDebt(
 		loanAmount,
 		interestRate,
-		fixedInterestPeriod,
+		interestPeriod,
 		monthlyRate,
 	);
 
