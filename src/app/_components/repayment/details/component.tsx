@@ -36,7 +36,9 @@ const ResultBody = <
 }: DetailsBodyProps<T>) => {
 	return (
 		<>
-			<Typography variant="h5">Ergebnis</Typography>
+			<Typography variant="h5" sx={{ textAlign: "center" }}>
+				Ergebnis
+			</Typography>
 			<Typography component="div" display="flex" gap={2}>
 				<CurrencyExchangeIcon fontSize="small" sx={{}} />
 				<Typography sx={{ fontSize: "16px" }}>
