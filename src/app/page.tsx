@@ -12,10 +12,6 @@ export default async function Home() {
 		<main>
 			<Container>
 				<Box
-					width="100%"
-					display="flex"
-					flexDirection="column"
-					padding={1}
 					sx={{
 						flexDirection: {
 							xs: "column",
@@ -28,6 +24,9 @@ export default async function Home() {
 						gap: {
 							xs: "1rem",
 						},
+						width: "100%",
+						display: "flex",
+						padding: "1rem",
 					}}
 				>
 					<RepaymentDetails />
