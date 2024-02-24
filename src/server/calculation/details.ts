@@ -10,7 +10,7 @@ export const calculateMonthlyRate = (
 
 	const monthlyRate = yearlyAnnuity / 12;
 
-	return monthlyRate;
+	return round(monthlyRate);
 };
 
 export const calculateRemainingDebt = (
@@ -21,7 +21,6 @@ export const calculateRemainingDebt = (
 ) => {
 	let debt = loanAmount;
 	const monthlyRateDezimal = interestRate / 100 / 12;
-
 	const interestPeriodInMonths = interestPeriod * 12;
 
 	for (let month = 0; month < interestPeriodInMonths; month++) {
@@ -30,9 +29,9 @@ export const calculateRemainingDebt = (
 			break;
 		}
 		const interestAmount = debt * monthlyRateDezimal;
-		const repaymentAmount = round(monthlyRate) - interestAmount;
-		debt -= repaymentAmount;
+		const repaymentAmount = monthlyRate - interestAmount;
+		debt -= round(repaymentAmount);
 	}
 
-	return debt;
+	return round(debt);
 };
