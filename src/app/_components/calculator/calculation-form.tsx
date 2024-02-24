@@ -117,10 +117,7 @@ const CalculationForm: React.FC = () => {
 			flexDirection="column"
 			alignItems="center"
 			sx={{
-				width: {
-					xs: "100%",
-					md: "20%",
-				},
+				width: "100%",
 			}}
 		>
 			<Form {...form}>

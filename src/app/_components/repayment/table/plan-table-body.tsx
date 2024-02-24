@@ -20,7 +20,7 @@ const PlanTableBody: React.FC = () => {
 					<TableCell
 						sx={{
 							fontSize: {
-								xs: "10px",
+								xs: "11px",
 								md: "14px",
 							},
 							whiteSpace: "nowrap",
@@ -33,7 +33,7 @@ const PlanTableBody: React.FC = () => {
 					<TableCell
 						sx={{
 							fontSize: {
-								xs: "10px",
+								xs: "11px",
 								md: "14px",
 							},
 							whiteSpace: "nowrap",
@@ -45,7 +45,7 @@ const PlanTableBody: React.FC = () => {
 					<TableCell
 						sx={{
 							fontSize: {
-								xs: "10px",
+								xs: "11px",
 								md: "14px",
 							},
 							whiteSpace: "nowrap",
@@ -57,7 +57,7 @@ const PlanTableBody: React.FC = () => {
 					<TableCell
 						sx={{
 							fontSize: {
-								xs: "10px",
+								xs: "11px",
 								md: "14px",
 							},
 							whiteSpace: "nowrap",
@@ -69,7 +69,7 @@ const PlanTableBody: React.FC = () => {
 					<TableCell
 						sx={{
 							fontSize: {
-								xs: "10px",
+								xs: "11px",
 								md: "14px",
 							},
 							whiteSpace: "nowrap",

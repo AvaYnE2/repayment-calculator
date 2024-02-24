@@ -12,12 +12,10 @@ const RepaymentTable: React.FC = () => {
 		<TableContainer component={Box}>
 			<Table
 				sx={{
-					minWidth: "100%",
-					width: "100vw",
-					// maxWidth: {
-					// 	xs: "100vw",
-					// 	md: "34rem",
-					// },
+					width: {
+						xs: "100vw",
+						md: "100%",
+					},
 				}}
 				aria-label="payment-plan-table"
 			>
