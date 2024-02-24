@@ -1,57 +1,95 @@
 "use client";
-import { calculationSchema } from "@/app/_components/calculator/schema";
-import {
-	oneToThirtyArray,
-	parseNumber,
-} from "@/app/_components/calculator/utils";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/app/_components/shared/form";
+import {calculationSchema} from "@/app/_components/calculator/schema";
+import {type ParamFormatterFunctions} from "@/app/_components/calculator/types";
+import {oneToThirtyArray, parseNumber,} from "@/app/_components/calculator/utils";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/app/_components/shared/form";
 import FormSelect from "@/app/_components/shared/form-select";
-import { useRepaymentDetails } from "@/app/_components/shared/stores/repayment-plan-store";
-import {
-	formatCurrency,
-	formatPercentage,
-} from "@/app/_components/shared/utils/format-number-input";
-import { api } from "@/trpc/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, InputAdornment, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { type z } from "zod";
+import {useRepaymentDetails} from "@/app/_components/shared/stores/repayment-plan-store";
+import {formatCurrency, formatPercentage,} from "@/app/_components/shared/utils/format-number-input";
+import {type CalculationFormKeys, type CalculationSchema,} from "@/shared/types/calculation";
+import {api} from "@/trpc/react";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Button, Input, InputAdornment, Typography} from "@mui/material";
+import {Box} from "@mui/system";
+import {useRouter, useSearchParams} from "next/navigation";
+import React, {useCallback, useEffect, useState} from "react";
+import {useForm, useWatch} from "react-hook-form";
 
 const CalculationForm: React.FC = () => {
+	const [hasSubmitted, setHasSubmitted] = useState(false);
 	const router = useRouter();
 	const { setDetails } = useRepaymentDetails();
 	const applyCalculation = api.calculation.calculateRepayment.useMutation({
 		onSuccess: (calculatedData) => {
 			router.refresh();
 			setDetails(calculatedData);
+			setHasSubmitted(true);
 		},
 	});
-	const form = useForm<z.infer<typeof calculationSchema>>({
+	const form = useForm<CalculationSchema>({
 		resolver: zodResolver(calculationSchema),
 		defaultValues: {
 			loanAmount: formatCurrency("250000"),
-			interestRate: "2",
-			initialRepaymentRate: "2",
-			fixedInterestPeriod: "10",
+			interestRate: formatPercentage("2"),
+			initialRepaymentRate: formatPercentage("2"),
+			fixedInterestPeriod: "1",
 		},
 	});
 
-	const onSubmit = async (data: z.infer<typeof calculationSchema>) => {
-		const parsedData = parseNumber(data);
-		applyCalculation.mutate(parsedData);
-	};
+	const onSubmit = useCallback(
+		async (data: CalculationSchema) => {
+			const parsedData = parseNumber(data);
+			applyCalculation.mutate(parsedData);
+		},
+		[applyCalculation],
+	);
 
-	// TODO: Implement save state in url here
+	const searchParams = useSearchParams();
+	const watcher = useWatch({
+		control: form.control,
+	});
+
+	useEffect(() => {
+		const query = new URLSearchParams(watcher).toString();
+		router.replace(`/?${query}`);
+	}, [router, watcher]);
+
+	useEffect(() => {
+		const queryParams = new URLSearchParams(searchParams.toString());
+
+		const paramFormatters: ParamFormatterFunctions = {
+			loanAmount: formatCurrency,
+			interestRate: formatPercentage,
+			initialRepaymentRate: formatPercentage,
+			fixedInterestPeriod: (value: string) => value,
+		};
+
+		queryParams.forEach((value, key) => {
+			if (key in form.getValues()) {
+				const formatter = paramFormatters[key as CalculationFormKeys];
+				if (formatter) {
+					const formattedValue = formatter(value);
+					form.setValue(key as CalculationFormKeys, formattedValue);
+				}
+			}
+		});
+	}, [form, searchParams]);
+
+	useEffect(() => {
+		if (hasSubmitted) {
+			const subscription = form.watch((data) => {
+				void (async () => {
+					const isValid = await form.trigger();
+
+					if (isValid) {
+						await onSubmit(data as CalculationSchema);
+					}
+				})();
+			});
+
+			return () => subscription.unsubscribe();
+		}
+	}, [form, hasSubmitted, onSubmit]);
 
 	return (
 		<Box
@@ -77,7 +115,7 @@ const CalculationForm: React.FC = () => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<FormItem>
+									<FormItem maxWidth="16rem">
 										<FormLabel>Darlehensbetrag*</FormLabel>
 										<FormControl>
 											<Input

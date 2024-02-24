@@ -62,7 +62,7 @@ const FormItem = React.forwardRef<
 
 	return (
 		<FormItemContext.Provider value={{ id }}>
-			<Box ref={ref} {...props} />
+			<Box maxWidth="16rem" ref={ref} {...props} />
 		</FormItemContext.Provider>
 	);
 });
@@ -119,7 +119,16 @@ const FormMessage = React.forwardRef<HTMLLabelElement, FormLabelProps>(
 		}
 
 		return (
-			<FormLabel ref={ref} id={formMessageId} error={!!error} {...props}>
+			<FormLabel
+				sx={{
+					whiteSpace: "normal",
+					wordBreak: "break-word",
+				}}
+				ref={ref}
+				id={formMessageId}
+				error={!!error}
+				{...props}
+			>
 				{body}
 			</FormLabel>
 		);
