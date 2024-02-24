@@ -65,11 +65,13 @@ const CalculationForm: React.FC = () => {
 		control: form.control,
 	});
 
+	// replace query params with form values
 	useEffect(() => {
 		const query = new URLSearchParams(watcher).toString();
 		router.replace(`/?${query}`);
 	}, [router, watcher]);
 
+	// replace form values with query params
 	useEffect(() => {
 		const queryParams = new URLSearchParams(searchParams.toString());
 
@@ -91,6 +93,7 @@ const CalculationForm: React.FC = () => {
 		});
 	}, [form, searchParams]);
 
+	// watch form values and trigger validation
 	useEffect(() => {
 		if (hasSubmitted) {
 			const subscription = form.watch((data) => {
@@ -113,6 +116,12 @@ const CalculationForm: React.FC = () => {
 			justifyContent="center"
 			flexDirection="column"
 			alignItems="center"
+			sx={{
+				width: {
+					xs: "100%",
+					md: "50%",
+				},
+			}}
 		>
 			<Typography variant="h2" sx={{ fontSize: "26px" }}>
 				Eingabe
@@ -122,37 +131,48 @@ const CalculationForm: React.FC = () => {
 					component="form"
 					display="flex"
 					flexDirection="column"
-					gap="3rem"
+					gap="2rem"
 					onSubmit={form.handleSubmit(onSubmit)}
+					sx={{
+						padding: {
+							xs: "1rem",
+							md: "2rem",
+						},
+						width: {
+							xs: "100%",
+							md: "50%",
+						},
+						alignItems: "center",
+						borderRadius: "1rem",
+						borderColor: "secondary.main",
+						border: "1px solid",
+					}}
 				>
 					<FormField
 						control={form.control}
 						name="loanAmount"
 						render={({ field }) => (
 							<FormItem>
+								<FormLabel>Darlehensbetrag</FormLabel>
 								<FormControl>
-									<FormItem maxWidth="16rem">
-										<FormLabel>Darlehensbetrag*</FormLabel>
-										<FormControl>
-											<Input
-												error={!!form.formState.errors.loanAmount}
-												endAdornment={
-													<InputAdornment position="end">€</InputAdornment>
-												}
-												autoComplete="off"
-												{...field}
-												onChange={(e) => {
-													const { value } = e.target;
+									<Input
+										sx={{ width: "100%" }}
+										error={!!form.formState.errors.loanAmount}
+										startAdornment={
+											<InputAdornment position="start">€</InputAdornment>
+										}
+										autoComplete="off"
+										{...field}
+										onChange={(e) => {
+											const { value } = e.target;
 
-													// TODO: Cursor position is not correct when typing before the comma
-													const formattedValue = formatCurrency(value);
-													field.onChange(formattedValue);
-												}}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
+											// TODO: Cursor position is not correct when typing before the comma
+											const formattedValue = formatCurrency(value);
+											field.onChange(formattedValue);
+										}}
+									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -161,12 +181,13 @@ const CalculationForm: React.FC = () => {
 						name="interestRate"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Sollzinssatz*</FormLabel>
+								<FormLabel>Sollzinssatz</FormLabel>
 								<FormControl>
 									<Input
+										sx={{ width: "100%" }}
 										error={!!form.formState.errors.interestRate}
-										endAdornment={
-											<InputAdornment position="end">%</InputAdornment>
+										startAdornment={
+											<InputAdornment position="start">%</InputAdornment>
 										}
 										autoComplete="off"
 										{...field}
@@ -188,13 +209,14 @@ const CalculationForm: React.FC = () => {
 						name="initialRepaymentRate"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Anfängliche Tilgung*</FormLabel>
+								<FormLabel>Anfängliche Tilgung</FormLabel>
 								<FormControl>
 									<Input
+										sx={{ width: "100%" }}
 										error={!!form.formState.errors.initialRepaymentRate}
 										autoComplete="off"
-										endAdornment={
-											<InputAdornment position="end">%</InputAdornment>
+										startAdornment={
+											<InputAdornment position="start">%</InputAdornment>
 										}
 										{...field}
 										onChange={(e) => {
@@ -230,7 +252,7 @@ const CalculationForm: React.FC = () => {
 						)}
 					/>
 					{/*TODO: Change styling because wrong styling gets applied to the button*/}
-					<Button type="submit" color="primary">
+					<Button type="submit" variant="outlined" color="primary">
 						Berechnen
 					</Button>
 				</Box>

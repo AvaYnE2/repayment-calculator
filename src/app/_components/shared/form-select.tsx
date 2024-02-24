@@ -42,7 +42,7 @@ const FormSelect: React.FC<Props> = ({
 					sx={{
 						position: "absolute",
 						top: -6,
-						left: 0,
+						right: 0,
 						zIndex: 100,
 					}}
 					onClick={() => resetValue("0")}
@@ -58,24 +58,27 @@ const FormSelect: React.FC<Props> = ({
 					value={value}
 					label={label}
 					onChange={handleChange}
-					endAdornment={
+					IconComponent={() => null}
+					startAdornment={
 						<InputAdornment
 							sx={{
 								marginRight: "2rem",
 								pointerEvents: "none",
 								position: "absolute",
-								right: 0,
+								left: 0,
 							}}
-							position="end"
+							position="start"
 						>
 							{unit}
 						</InputAdornment>
 					}
 					sx={{
 						minWidth: "100%",
-						textAlign: "center",
+						pl: "3rem",
+						textAlign: "start",
 						"& .MuiSelect-select": {
-							textAlignLast: "center",
+							textAlignLast: "start",
+							backgroundColor: "transparent",
 						},
 					}}
 				>

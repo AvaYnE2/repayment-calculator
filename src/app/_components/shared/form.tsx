@@ -62,7 +62,14 @@ const FormItem = React.forwardRef<
 
 	return (
 		<FormItemContext.Provider value={{ id }}>
-			<Box maxWidth="16rem" ref={ref} {...props} />
+			<Box
+				width={{
+					xs: "100%",
+					md: "100%",
+				}}
+				ref={ref}
+				{...props}
+			/>
 		</FormItemContext.Provider>
 	);
 });

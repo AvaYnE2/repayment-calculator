@@ -10,8 +10,18 @@ export default async function Home() {
 
 	return (
 		<main>
-			<Box display="flex" justifyContent="center" alignItems="start" gap="4rem">
-				<CalculationForm />
+			<Box
+				flexDirection="column"
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "start",
+					gap: "2rem",
+				}}
+			>
+				<Box width="100%" display="flex" justifyContent="center">
+					<CalculationForm />
+				</Box>
 				<Box>
 					<Typography variant="h2" sx={{ fontSize: "26px" }}>
 						Ergebnis
