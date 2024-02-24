@@ -42,7 +42,7 @@ export const calculationSchema = z.object({
 				params: {},
 			},
 		),
-	fixedInterestPeriod: z
+	interestPeriod: z
 		.string()
 		.min(1, "Zinsbindungsdauer ist erforderlich")
 		.refine(
@@ -79,7 +79,7 @@ export const numberCalculationSchema = z.object({
 		})
 		.min(0, "Anfängliche Tilgung darf nicht negativ sein")
 		.max(100, "Anfängliche Tilgung muss kleiner als 100"),
-	fixedInterestPeriod: z
+	interestPeriod: z
 		.number({
 			invalid_type_error: "Zinsbindungsdauer muss eine Zahl sein",
 		})

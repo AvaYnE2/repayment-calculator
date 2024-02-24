@@ -1,7 +1,6 @@
 import CalculationForm from "@/app/_components/calculator/calculation-form";
 import RepaymentDetails from "@/app/_components/repayment/details/component";
 import RepaymentTable from "@/app/_components/repayment/table/component";
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -19,14 +18,29 @@ export default async function Home() {
 					gap: "2rem",
 				}}
 			>
-				<Box width="100%" display="flex" justifyContent="center">
+				<Box
+					width="100%"
+					display="flex"
+					flexDirection="column"
+					padding={1}
+					sx={{
+						flexDirection: {
+							xs: "column",
+							md: "row-reverse",
+						},
+						justifyContent: {
+							xs: "center",
+							md: "space-evenly",
+						},
+						gap: {
+							xs: "1rem",
+						},
+					}}
+				>
+					<RepaymentDetails />
 					<CalculationForm />
 				</Box>
 				<Box>
-					<Typography variant="h2" sx={{ fontSize: "26px" }}>
-						Ergebnis
-					</Typography>
-					<RepaymentDetails />
 					<RepaymentTable />
 				</Box>
 			</Box>

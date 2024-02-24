@@ -13,6 +13,6 @@ export function parseNumber(data: z.infer<typeof calculationSchema>) {
 		loanAmount: formatGermanStringToNumber(data.loanAmount),
 		interestRate: formatGermanStringToNumber(data.interestRate),
 		initialRepaymentRate: formatGermanStringToNumber(data.initialRepaymentRate),
-		fixedInterestPeriod: formatGermanStringToNumber(data.fixedInterestPeriod),
+		interestPeriod: formatGermanStringToNumber(data.interestPeriod),
 	};
 }

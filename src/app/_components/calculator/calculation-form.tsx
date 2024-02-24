@@ -25,7 +25,7 @@ import {
 } from "@/shared/types/calculation";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, InputAdornment, Typography } from "@mui/material";
+import { Button, Input, InputAdornment } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
@@ -48,7 +48,7 @@ const CalculationForm: React.FC = () => {
 			loanAmount: formatCurrency("250000"),
 			interestRate: formatPercentage("2"),
 			initialRepaymentRate: formatPercentage("2"),
-			fixedInterestPeriod: "0",
+			interestPeriod: "0",
 		},
 	});
 
@@ -79,7 +79,7 @@ const CalculationForm: React.FC = () => {
 			loanAmount: formatCurrency,
 			interestRate: formatPercentage,
 			initialRepaymentRate: formatPercentage,
-			fixedInterestPeriod: (value: string) => value,
+			interestPeriod: (value: string) => value,
 		};
 
 		queryParams.forEach((value, key) => {
@@ -119,13 +119,10 @@ const CalculationForm: React.FC = () => {
 			sx={{
 				width: {
 					xs: "100%",
-					md: "50%",
+					md: "20%",
 				},
 			}}
 		>
-			<Typography variant="h2" sx={{ fontSize: "26px" }}>
-				Eingabe
-			</Typography>
 			<Form {...form}>
 				<Box
 					component="form"
@@ -140,7 +137,7 @@ const CalculationForm: React.FC = () => {
 						},
 						width: {
 							xs: "100%",
-							md: "50%",
+							md: "100%",
 						},
 						alignItems: "center",
 						borderRadius: "1rem",
@@ -233,7 +230,7 @@ const CalculationForm: React.FC = () => {
 					/>
 					<FormField
 						control={form.control}
-						name="fixedInterestPeriod"
+						name="interestPeriod"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Zinsbindungsdauer</FormLabel>
@@ -251,7 +248,6 @@ const CalculationForm: React.FC = () => {
 							</FormItem>
 						)}
 					/>
-					{/*TODO: Change styling because wrong styling gets applied to the button*/}
 					<Button type="submit" variant="outlined" color="primary">
 						Berechnen
 					</Button>

@@ -1,1 +1,6 @@
-export type ParamFormatterFunctions = Record<string, (value: string) => string>;
+import { CalculationFormKeys } from "@/shared/types/calculation";
+
+export type ParamFormatterFunctions = Record<
+	CalculationFormKeys,
+	(value: string) => string
+>;
