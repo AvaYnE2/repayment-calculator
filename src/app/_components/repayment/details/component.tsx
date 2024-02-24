@@ -20,6 +20,25 @@ const RepaymentDetails: React.FC = () => {
 				gap: "1rem",
 			}}
 		>
+			{details.monthlyRate ? <ResultBody details={details} /> : <NoDataBody />}
+		</Box>
+	);
+};
+
+interface DetailsBodyProps<T> {
+	details: T;
+}
+
+const ResultBody = <
+	T extends { monthlyRate: string; remainingDebt: string | null },
+>({
+	details,
+}: DetailsBodyProps<T>) => {
+	return (
+		<>
+			<Typography variant="h5" sx={{ textAlign: "center" }}>
+				Ergebnis
+			</Typography>
 			<Typography component="div" display="flex" gap={2}>
 				<CurrencyExchangeIcon fontSize="small" sx={{}} />
 				<Typography sx={{ fontSize: "16px" }}>
@@ -37,7 +56,23 @@ const RepaymentDetails: React.FC = () => {
 					</Typography>
 				</>
 			)}
-		</Box>
+		</>
+	);
+};
+
+const NoDataBody: React.FC = () => {
+	return (
+		<>
+			<Typography variant="h5" sx={{ textAlign: "center" }}>
+				Keine Daten
+			</Typography>
+			<Typography
+				sx={{ textAlign: "center", fontSize: "14px", color: "text.secondary" }}
+			>
+				Bitte geben Sie die benötigten Daten ein und klicken Sie auf
+				&quot;Berechnen&quot;
+			</Typography>
+		</>
 	);
 };
 
