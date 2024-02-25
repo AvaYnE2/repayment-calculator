@@ -112,22 +112,22 @@ const CalculationForm: React.FC = () => {
 
 	return (
 		<Box
-			display="flex"
-			justifyContent="center"
-			flexDirection="column"
-			alignItems="center"
 			sx={{
 				width: "100%",
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				alignItems: "center",
 			}}
 		>
 			<Form {...form}>
 				<Box
 					component="form"
-					display="flex"
-					flexDirection="column"
-					gap="2rem"
 					onSubmit={form.handleSubmit(onSubmit)}
 					sx={{
+						display: "flex",
+						flexDirection: "column",
+						gap: "2rem",
 						padding: {
 							xs: "1rem",
 							md: "2rem",
